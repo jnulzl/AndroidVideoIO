@@ -24,6 +24,7 @@ struct FFmpegVideoCapture::Impl
 
     int width = 0;
     int height = 0;
+    int bit_rate = 0;
     AVRational time_base{};
     double fps = 0.0;
     int frame_count = 0;
@@ -61,8 +62,9 @@ struct FFmpegVideoCapture::Impl
 
         width = codec_ctx->width;
         height = codec_ctx->height;
+        bit_rate = codec_ctx->bit_rate;
         fps = av_q2d(video_stream->r_frame_rate);
-        frame_count = video_stream->nb_frames;
+        frame_count = video_stream->nb_frames;        
 
         frame = av_frame_alloc();
         pkt = av_packet_alloc();
@@ -192,4 +194,9 @@ int FFmpegVideoCapture::getHeight() const
 int FFmpegVideoCapture::getFrameCount() const
 {
     return impl_->frame_count;
+}
+
+int FFmpegVideoCapture::getBitRate() const
+{
+    return impl_->bit_rate;
 }

@@ -9,7 +9,7 @@
 
 #define COMPILE_TIME "20250805"
 #define GIT_BRANCH "master"
-#define GIT_HASH ""
+#define GIT_HASH "2d07258"
 
 static inline void print_version()
 {

@@ -18,6 +18,7 @@ public:
     int getWidth() const;
     int getHeight() const;
     int getFrameCount() const;
+    int getBitRate() const;
 
 private:
     struct Impl;
