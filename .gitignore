@@ -14,6 +14,6 @@ third_party/*
 
 script/__pycache__
 
-*/*/android_videoio_version.h
+src/android_videoio_version.h
 
 common/alg_debug.h
