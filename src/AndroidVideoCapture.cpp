@@ -33,14 +33,20 @@ struct FFmpegVideoCapture::Impl
         avformat_network_init();
 
         if (avformat_open_input(&fmt_ctx, filename.c_str(), nullptr, nullptr) < 0)
+        {
             return false;
+        }
 
         if (avformat_find_stream_info(fmt_ctx, nullptr) < 0)
+        {
             return false;
+        }
 
         video_stream_index = av_find_best_stream(fmt_ctx, AVMEDIA_TYPE_VIDEO, -1, -1, &decoder, 0);
         if (video_stream_index < 0)
+        {
             return false;
+        }
 
         video_stream = fmt_ctx->streams[video_stream_index];
         time_base = video_stream->time_base;
@@ -49,7 +55,9 @@ struct FFmpegVideoCapture::Impl
         avcodec_parameters_to_context(codec_ctx, video_stream->codecpar);
 
         if (avcodec_open2(codec_ctx, decoder, nullptr) < 0)
+        {
             return false;
+        }
 
         width = codec_ctx->width;
         height = codec_ctx->height;
@@ -103,11 +111,31 @@ struct FFmpegVideoCapture::Impl
 
     void release()
     {
-        if (pkt) av_packet_free(&pkt);
-        if (frame) av_frame_free(&frame);
-        if (sws_ctx) sws_freeContext(sws_ctx);
-        if (codec_ctx) avcodec_free_context(&codec_ctx);
-        if (fmt_ctx) avformat_close_input(&fmt_ctx);
+        if (pkt)
+        {
+            av_packet_free(&pkt);
+            pkt = nullptr;
+        }
+        if (frame)
+        {
+            av_frame_free(&frame);
+            frame = nullptr;
+        }
+        if (sws_ctx)
+        {
+            sws_freeContext(sws_ctx);
+            sws_ctx = nullptr;
+        }
+        if (codec_ctx)
+        {
+            avcodec_free_context(&codec_ctx);
+            codec_ctx = nullptr;
+        }
+        if (fmt_ctx)
+        {
+            avformat_close_input(&fmt_ctx);
+            fmt_ctx = nullptr;
+        }
     }
 
     ~Impl()
