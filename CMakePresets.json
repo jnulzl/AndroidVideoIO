@@ -1,0 +1,31 @@
+{
+    "version": 3,
+    "cmakeMinimumRequired": {
+        "major": 3,
+        "minor": 19,
+        "patch": 0
+    },
+    "configurePresets": [
+        {
+            "name": "Build_Release_Android",
+            "generator": "Unix Makefiles",
+            "binaryDir": "${sourceDir}/build/${presetName}",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release",
+                "CMAKE_EXPORT_COMPILE_COMMANDS": "YES",
+                "CMAKE_SYSTEM_NAME": "Android",
+                "ANDROID_ABI": "arm64-v8a",
+                "OpenCV_SDK_NATIVE_ROOT":"/mnt/d/codes/RK35XX/third_party/Android/OpenCV-android-sdk/sdk/native",
+                "FFMPEG_ROOT":"third_party/ffmpeg_android",
+                "CMAKE_TOOLCHAIN_FILE": "/mnt/d/codes/third_party/Linux/android-ndk-r25c/build/cmake/android.toolchain.cmake"
+            }
+        },
+        {
+            "name": "Build_Debug_Android",
+            "inherits": "Build_Release_Android",            
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug"
+            }
+        }
+    ]
+}
