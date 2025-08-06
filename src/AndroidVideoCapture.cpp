@@ -171,6 +171,19 @@ bool FFmpegVideoCapture::read(cv::Mat& frame)
     return impl_->read(frame);
 }
 
+bool FFmpegVideoCapture::read(cv::Mat& frame, int des_width, int des_height)
+{
+    if (!impl_->read(frame))
+    {
+        return false;
+    }
+    if (des_width > 0 && des_height > 0)
+    {
+        cv::resize(frame, frame, cv::Size(des_width, des_height));
+    }
+    return true;
+}
+
 void FFmpegVideoCapture::release()
 {
     impl_->release();
