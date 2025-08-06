@@ -11,7 +11,7 @@ public:
 
     bool open(const std::string& filename);
     bool isOpened() const;
-    bool read(cv::Mat& frame);
+    bool read(cv::Mat& frame, int des_width=1920, int des_height=1080);
     void release();
 
     double getFPS() const;

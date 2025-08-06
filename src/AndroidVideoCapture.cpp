@@ -72,7 +72,7 @@ struct FFmpegVideoCapture::Impl
         return true;
     }
 
-    bool read(cv::Mat& out_mat)
+    bool read(cv::Mat& out_mat, int des_width, int des_height)
     {
         while (av_read_frame(fmt_ctx, pkt) >= 0)
         {
@@ -96,11 +96,11 @@ struct FFmpegVideoCapture::Impl
                 if (!sws_ctx)
                 {
                     sws_ctx = sws_getContext(width, height, codec_ctx->pix_fmt,
-                        width, height, AV_PIX_FMT_BGR24,
+                        des_width, des_height, AV_PIX_FMT_BGR24,
                         SWS_BILINEAR, nullptr, nullptr, nullptr);
                 }
 
-                out_mat.create(height, width, CV_8UC3);
+                out_mat.create(des_height, des_width, CV_8UC3);
                 uint8_t* dst_data[1] = { out_mat.data };
                 int dst_linesize[1] = { static_cast<int>(out_mat.step) };
 
@@ -166,9 +166,9 @@ bool FFmpegVideoCapture::isOpened() const
     return impl_->fmt_ctx != nullptr;
 }
 
-bool FFmpegVideoCapture::read(cv::Mat& frame)
+bool FFmpegVideoCapture::read(cv::Mat& frame, int des_width, int des_height)
 {
-    return impl_->read(frame);
+    return impl_->read(frame, des_width, des_height);
 }
 
 void FFmpegVideoCapture::release()

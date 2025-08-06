@@ -33,16 +33,18 @@ void videoDecodeEncode(const std::string& path)
     }
     std::printf("Video FPS: %f, Width: %d, Height: %d\n", cap.getFPS(), cap.getWidth(), cap.getHeight());
 
+    int des_width = 640;
+    int des_height = 360;
     cv::Mat frame;
     int frame_id = 0;
     FFmpegVideoWriter writer;
-    writer.open("imgs/output.mp4", cap.getWidth(), cap.getHeight(), cap.getFPS(), cap.getBitRate());    
+    writer.open("imgs/output.mp4", des_width, des_height, cap.getFPS(), cap.getBitRate());
     if (!writer.isOpened())
     {
         fprintf(stderr, "Cannot open video writer.\n");
         return;
     }
-    while (cap.read(frame))
+    while (cap.read(frame, des_width, des_height))
     {
         // 使用 OpenCV 显示或处理 BGR 帧
         cv::imwrite("imgs/frame" + std::to_string(frame_id) + ".jpg", frame);
