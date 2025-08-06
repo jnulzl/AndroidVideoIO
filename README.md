@@ -2,7 +2,7 @@
 
 ## 开发环境
 
-- FFMPEG 4.X+
+- [FFMPEG v7.1](https://github.com/jnulzl/ffmpeg_android_lib)
 
 - Android NDK r25c
 
