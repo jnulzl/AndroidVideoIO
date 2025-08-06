@@ -10,7 +10,6 @@ bin
 samples
 build*
 cmake-build*
-third_party/*
 
 script/__pycache__
 
